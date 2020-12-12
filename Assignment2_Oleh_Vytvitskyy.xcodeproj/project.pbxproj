@@ -16,6 +16,8 @@
 		FC5E1C2A256819CF005FE071 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC5E1C28256819CF005FE071 /* LaunchScreen.storyboard */; };
 		FC5E1C35256819CF005FE071 /* Assignment2_Oleh_VytvitskyyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5E1C34256819CF005FE071 /* Assignment2_Oleh_VytvitskyyTests.swift */; };
 		FC5E1C40256819CF005FE071 /* Assignment2_Oleh_VytvitskyyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5E1C3F256819CF005FE071 /* Assignment2_Oleh_VytvitskyyUITests.swift */; };
+		FC5E1C5725681BF8005FE071 /* ChartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5E1C5625681BF8005FE071 /* ChartScene.swift */; };
+		FC5E1C5F25681C85005FE071 /* ChartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FC5E1C5E25681C85005FE071 /* ChartScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		FC5E1C3B256819CF005FE071 /* Assignment2_Oleh_VytvitskyyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Assignment2_Oleh_VytvitskyyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5E1C3F256819CF005FE071 /* Assignment2_Oleh_VytvitskyyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignment2_Oleh_VytvitskyyUITests.swift; sourceTree = "<group>"; };
 		FC5E1C41256819CF005FE071 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC5E1C5625681BF8005FE071 /* ChartScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScene.swift; sourceTree = "<group>"; };
+		FC5E1C5E25681C85005FE071 /* ChartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChartScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,8 @@
 				FC5E1C1A256819CC005FE071 /* AppDelegate.swift */,
 				FC5E1C1C256819CC005FE071 /* SceneDelegate.swift */,
 				FC5E1C1E256819CC005FE071 /* ViewController.swift */,
+				FC5E1C5625681BF8005FE071 /* ChartScene.swift */,
+				FC5E1C5E25681C85005FE071 /* ChartScene.sks */,
 				FC5E1C20256819CC005FE071 /* Main.storyboard */,
 				FC5E1C26256819CF005FE071 /* Assets.xcassets */,
 				FC5E1C28256819CF005FE071 /* LaunchScreen.storyboard */,
@@ -235,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC5E1C2A256819CF005FE071 /* LaunchScreen.storyboard in Resources */,
+				FC5E1C5F25681C85005FE071 /* ChartScene.sks in Resources */,
 				FC5E1C27256819CF005FE071 /* Assets.xcassets in Resources */,
 				FC5E1C22256819CC005FE071 /* Main.storyboard in Resources */,
 			);
@@ -264,6 +271,7 @@
 				FC5E1C1F256819CC005FE071 /* ViewController.swift in Sources */,
 				FC5E1C1B256819CC005FE071 /* AppDelegate.swift in Sources */,
 				FC5E1C1D256819CC005FE071 /* SceneDelegate.swift in Sources */,
+				FC5E1C5725681BF8005FE071 /* ChartScene.swift in Sources */,
 				FC5E1C25256819CC005FE071 /* Assignment2_Oleh_Vytvitskyy.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,7 +457,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.prog31632.Assignment2-Oleh-Vytvitskyy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -467,7 +475,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.prog31632.Assignment2-Oleh-Vytvitskyy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
