@@ -203,7 +203,9 @@
                     </view>
                     <connections>
                         <outlet property="chartView" destination="2aG-nI-jiS" id="FT0-k3-cMu"/>
+                        <outlet property="labelDaily" destination="CB0-7G-wjf" id="zjZ-2L-6Cr"/>
                         <outlet property="labelProvince" destination="Mqa-zx-XBb" id="2or-Do-vAY"/>
+                        <outlet property="labelTotal" destination="QJs-fb-XUG" id="ceR-XG-k78"/>
                         <outlet property="pickerDate" destination="fnZ-bf-O5z" id="aVo-Zq-vPR"/>
                         <outlet property="segmentProvince" destination="s7b-WT-i3n" id="aqd-eS-dMh"/>
                     </connections>

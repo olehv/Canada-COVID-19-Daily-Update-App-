@@ -10,12 +10,12 @@ import SpriteKit
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
-
-
     // Properties
     @IBOutlet weak var chartView: SKView!
     @IBOutlet weak var segmentProvince: UISegmentedControl!
     @IBOutlet weak var labelProvince: UILabel!
+    @IBOutlet weak var labelDaily: UILabel!
+    @IBOutlet weak var labelTotal: UILabel!
     
     var jsonData: [[String:Any]] = []
     var dates = [String] ()
@@ -23,37 +23,28 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var pickerDate: UIPickerView!
     
     var prov : String = "Canada"
+    let urlString = "http://ejd.songho.ca/ios/covid19.json"
 
-    //var dict: [[String:Any]] = []
-    
-
-
-    
-    
-
-    
-    
+    var startDate : Date?
+    var currDate : Date?
     
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        pickerDate?.delegate = self
-        pickerDate?.dataSource = self
-        
-        // create a URL
-        let urlString = "http://ejd.songho.ca/ios/covid19.json"
+        pickerDate.delegate = self
+        pickerDate.dataSource = self
+                
         // get json data
         requestJson(urlString)
-        
-        
         
         // Present scene
         if let scene = SKScene(fileNamed: "ChartScene")
         {
             scene.scaleMode = .aspectFit
             chartView.presentScene(scene)
+            
         }
         
         
@@ -81,8 +72,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // get the title of selected row
         let date = self.pickerView(pickerView, titleForRow: row, forComponent: 0) ?? ""
         
-        #warning("more?")
+        updateView()
     }
+    
+    
+    
     
     
     
@@ -106,23 +100,18 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 labelProvince.text = "COVID-19: Canada"
                 prov = "Canada"
         }
-        //print(segmentProvince.selectedSegmentIndex)
         
+        // I don't get why it doesn't update it..
         
-        // call updateChart()
-        // 1. gen values array from segment value
-        // ...
+        updateView()
         
-        // last step:
+    
         if let scene = chartView.scene as? ChartScene
         {
-            // scene.updateChart(values, startDate, currDate)
-            // update circle pos as well
-            // startDate is first date of json data
-            // currDate is what user selected in the scroll
+            scene.updateChart(values, startDate: self.startDate!, currDate: self.currDate!)
         }
     }
-
+    
     
     
     // MARK: 1.
@@ -154,9 +143,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
         }
         
-        // Call resume() after creating dataTask
         task.resume()
-        
     }
     
     
@@ -210,10 +197,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 let dateString = "2020-01-31"
                 let firstDate = formatter.date(from: dateString) ?? Date()
                 
+                self.startDate = firstDate
+                
                 let SecPerDay : Double = 60 * 60 * 24
                 //let lDate = firstDate.addingTimeInterval(SecPerDay * 316.0)
                 let last = dates.last
                 let lastDate = formatter.date(from: last ?? "2020-12-01")
+                self.currDate = lastDate
                 let sec = lastDate?.timeIntervalSince(firstDate)
                 
                 let dayCount = Int(sec! / SecPerDay + 0.5) + 1
@@ -233,7 +223,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                                                                 $0["date"] as? String == dateStr
                     })
                     {
-                        print("GOT HERE")
                         // found date, put the value from JSON
                         values[i] = jsonData[index]["numtoday"] as? Int ?? 0
                     }
@@ -243,11 +232,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                         values[i] = 0
                     }
                 }
-                
-                print("Values for Canada on last date: \(values[314])")
-                
-                // do other parsing process
-                
+                print("Values for Canada on Dec 10: \(values[314])") // <- Dec 10 was 6739 for Canada total - works!
             }
             else
             {
@@ -255,22 +240,46 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 return
             }
             
-            // draw chart first time after parsing JSON
             DispatchQueue.main.async
             {
+            
                 // reload pickerView
                 self.pickerDate?.reloadAllComponents()
                 
                 // select the latest date by default
                 self.pickerDate?.selectRow(self.dates.count-1, inComponent: 0, animated: false)
-                                
-                // update other UI controls here
-                #warning("update other UI controls")
+                
+                // Update the labels
+                self.updateView()
+                
             }
         }
         catch
         {
             self.showAlert(message: error.localizedDescription)
+        }
+    }
+    
+    
+    func updateView(){
+        let index = self.pickerDate.selectedRow(inComponent: 0)
+        let dateStr = self.pickerView(self.pickerDate, titleForRow: index, forComponent: 0) ?? ""
+        
+        // find matching data in JSON
+        if let i = self.jsonData.firstIndex(where: { $0["prname"] as? String == self.prov &&
+                                                    $0["date"] as? String == dateStr
+        })
+        {
+            self.labelDaily.text = String(self.jsonData[i]["numtoday"] as? Int ?? 0)
+            self.labelTotal.text = String(self.jsonData[i]["numtotal"] as? Int ?? 0)
+        }else{
+            self.labelDaily.text = "N/A"
+            self.labelTotal.text = "N/A"
+        }
+    
+    
+        if let scene = chartView.scene as? ChartScene {
+            scene.updateChart(values, startDate: self.startDate!, currDate: self.currDate!)
         }
     }
   
